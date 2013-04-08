@@ -1,6 +1,6 @@
 <?php
 
-define('IS_PRODUCTION', ($_SERVER['SERVER_NAME'] != 'localhost') && ($_SERVER['SERVER_NAME'] != 'plotlinesapi');
+define('IS_PRODUCTION', ($_SERVER['SERVER_NAME'] != 'localhost') && ($_SERVER['SERVER_NAME'] != 'plotlinesapi'));
 
 $baseDir = 'plotlinesapi/';
 if (IS_PRODUCTION)
