@@ -31,29 +31,30 @@ $app->configureMode(PRODUCTION, function () use ($app) {
 });
 $app->configureMode(DEVELOPMENT, function () use ($app) {
     $app->config(array(
-        'log.enable' => false,
+        'log.enable' => true,
         'debug' => true
     ));
 });
-
+// ContentTypes parses json request data into request parameters
+//$app->add(new \Slim\Middleware\ContentTypes());
+//error_reporting(E_ALL | E_STRICT);
+// TODO turn off display errors
+ini_set("display_errors", 1);
 // load app code
 require $appDir . 'routes/stories.php';
 
-/*
+// For whatever reason, can't set these access control headers using Slim
+header('Access-Control-Allow-Origin: *'); // TODO add real domain http://plotlines...
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: POST, GET, PUT, DELETE');
-    header('Access-Control-Allow-Headers: X-Requested-With, Content-Type');
+    header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-HTTP-Method-Override '); // X-Requested-With,Authorization,Accept,Origin,Content-Type
 }
-else {
-    header('Access-Control-Allow-Origin: *');
-    //echo 'foobar';
-}
-*/
+
 
 // go
 $response = $app->response();
-$response->header('Access-Control-Allow-Origin','http://plotlines'); // TODO add real domain
+//$response->header('Access-Control-Allow-Origin','http://plotlines');
+//$response->header('Access-Control-Allow-Origin','*');
 //$response->header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
 //$response->header('Access-Control-Allow-Headers', 'Content-Type');
 //$response->header('Access-Control-Allow-Headers: X-Requested-With,Authorization,Accept,Origin,Content-Type');
