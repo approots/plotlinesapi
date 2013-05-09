@@ -13,9 +13,9 @@ $app->get('/storiespage', function () use ($app) {
 
     try {
         // TODO
-        $account_id = 1;
-        $stories = models\Story::stories($account_id);
-        $existingSlugs = models\Story::existingSlugs($account_id);
+        $accountId = 1;
+        $stories = models\Story::stories($accountId);
+        $existingSlugs = models\Story::existingSlugs($accountId);
         $stories = array(
             'stories' => $stories,
             'existingSlugs' => $existingSlugs
@@ -43,7 +43,7 @@ $app->get('/storypage/:id', function ($id) use ($app) {
         $accountId = 1;
         $story = models\Story::story($id);
         $otherSlugs = models\Story::otherSlugs($accountId, $id);
-        $passages = models\Story::passages($id);
+        $passages = models\Passage::passages($id);
 
         $story = array(
             'story' => $story,
@@ -100,6 +100,7 @@ $app->delete('/test', function () use ($app) {
         //$data = $env['slim.input'];
         //$data .= $app->request()->getBody();
         //$data .= 'wtf';
+
        // $app->halt(500, 'some of a');
         //$story = utilities\Request::post($story);
         //models\Story::delete($account_id, $story->id);
@@ -125,12 +126,12 @@ $app->delete('/stories', function () use ($app) {
     try {
         // TODO validation
         // TODO author_id from session to be sure we're deleting this author's story
-        $account_id = 1;
+        $accountId = 1;
 
         $obj = utilities\Request::objectFromJson($request);
         $id = $obj->id;
 
-        models\Story::delete($account_id, $id);
+        models\Story::delete($accountId, $id);
     }
     catch (Exception $err) {
         $app->getLog()->error($err->getTraceAsString());
@@ -147,7 +148,7 @@ $app->put('/stories', function () use ($app) {
     $response = $app->response();
     $response->header('Content-type','application/json');
     $story = (object) array (
-        'account_id' => '1',
+        'accountId' => '1',
         'id' => null,
         'title' => null,
         'description' => null
@@ -175,7 +176,7 @@ $app->post('/stories', function () use ($app) {
     $response = $app->response();
     $response->header('Content-type','application/json');
     $story = (object) array (
-        'account_id' => '1',
+        'accountId' => '1',
         'title' => null,
         'description' => null
     );

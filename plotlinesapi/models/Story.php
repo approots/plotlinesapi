@@ -3,16 +3,16 @@ namespace models;
 
 class Story
 {
-    public static function stories($account_id = null)
+    public static function stories($accountId = null)
     {
         $query = null;
         $conn = Db::connection();
 
-        if ($account_id)
+        if ($accountId)
         {
             $sql = 'select * from story where account_id = :account_id';
             $query = $conn->prepare($sql);
-            if (! $query->execute(array(":account_id" => $account_id)))
+            if (! $query->execute(array(":account_id" => $accountId)))
             {
                 $error = $query->errorInfo();
                 throw new Exception($query->errorInfo($error[2]));
@@ -42,7 +42,7 @@ class Story
         return $query->fetch();
     }
 
-    public static function otherSlugs($account_id, $id)
+    public static function otherSlugs($accountId, $id)
     {
         $data = array();
         $query = null;
@@ -50,7 +50,7 @@ class Story
 
         $sql = 'select slug from story where account_id = :account_id and id != :id';
         $query = $conn->prepare($sql);
-        if (! $query->execute(array(":account_id"=>$account_id,":id" => $id))) {
+        if (! $query->execute(array(":account_id"=>$accountId,":id" => $id))) {
             $error = $query->errorInfo();
             throw new Exception($query->errorInfo($error[2]));
         }
@@ -62,7 +62,7 @@ class Story
         return $data;
     }
 
-    public static function existingSlugs($account_id)
+    public static function existingSlugs($accountId)
     {
         $data = array();
         $query = null;
@@ -70,7 +70,7 @@ class Story
 
         $sql = 'select slug from story where account_id = :account_id';
         $query = $conn->prepare($sql);
-        if (! $query->execute(array(":account_id"=>$account_id))) {
+        if (! $query->execute(array(":account_id"=>$accountId))) {
             $error = $query->errorInfo();
             throw new Exception($query->errorInfo($error[2]));
         }
@@ -82,29 +82,14 @@ class Story
         return $data;
     }
 
-    public static function passages($story_id)
-    {
-        $query = null;
-        $conn = Db::connection();
-        $sql = 'select * from passage where story_id = :story_id';
-
-        $query = $conn->prepare($sql);
-        if (! $query->execute(array(":story_id" => $story_id))) {
-            $error = $query->errorInfo();
-            throw new Exception($query->errorInfo($error[2]));
-        }
-
-        return $query->fetchAll();
-    }
-
-    public static function delete($account_id, $id)
+    public static function delete($accountId, $id)
     {
         //throw new \Exception('A problem with validation?');
         $query = null;
         $conn = Db::connection();
         $sql = 'delete from story where account_id = :account_id and id = :id';
         $query = $conn->prepare($sql);
-        if (! $query->execute(array(":account_id" => $account_id, ":id" => $id))) {
+        if (! $query->execute(array(":account_id" => $accountId, ":id" => $id))) {
             $error = $query->errorInfo();
             throw new Exception($query->errorInfo($error[2]));
         }
@@ -124,7 +109,7 @@ class Story
             ":slug" => $story->slug,
             ":title" => $story->title,
             ":description" => $story->description,
-            ":account_id" => $story->account_id,
+            ":account_id" => $story->accountId,
             ":id" => $story->id))
         )
         {
@@ -144,7 +129,7 @@ class Story
         $sql = 'INSERT INTO story (account_id, slug, title, description) VALUES (?, ?, ?, ?)';
 
         $query = $conn->prepare($sql);
-        $query->execute(array($story->account_id, $story->slug, $story->title, $story->description));
+        $query->execute(array($story->accountId, $story->slug, $story->title, $story->description));
 
         return $conn->lastInsertId();
     }

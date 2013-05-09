@@ -40,8 +40,8 @@ $app->configureMode(DEVELOPMENT, function () use ($app) {
 //error_reporting(E_ALL | E_STRICT);
 // TODO turn off display errors
 ini_set("display_errors", 1);
-// load app code
-require $appDir . 'routes/stories.php';
+
+
 
 // For whatever reason, can't set these access control headers using Slim
 header('Access-Control-Allow-Origin: *'); // TODO add real domain http://plotlines...
@@ -50,9 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, X-HTTP-Method-Override '); // X-Requested-With,Authorization,Accept,Origin,Content-Type
 }
 
-
+// load app code
+require $appDir . 'routes/stories.php';
+require $appDir . 'routes/passages.php';
 // go
-$response = $app->response();
+//$response = $app->response();
 //$response->header('Access-Control-Allow-Origin','http://plotlines');
 //$response->header('Access-Control-Allow-Origin','*');
 //$response->header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
