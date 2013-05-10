@@ -38,10 +38,10 @@ class Passage
         //throw new \Exception('A problem with validation?');
         $query = null;
         $conn = Db::connection();
-        $sql = 'INSERT INTO passage (story_id, title, passage) VALUES (?, ?, ?)';
+        $sql = 'INSERT INTO passage (story_id, title, body) VALUES (?, ?, ?)';
 
         $query = $conn->prepare($sql);
-        $query->execute(array($passage->storyId, $passage->title, $passage->passage));
+        $query->execute(array($passage->storyId, $passage->title, $passage->body));
 
         return $conn->lastInsertId();
     }
@@ -63,14 +63,14 @@ class Passage
         //throw new \Exception('A problem with validation?');
         $query = null;
         $conn = Db::connection();
-        $sql = 'UPDATE passage set title = :title, passage = :passage
+        $sql = 'UPDATE passage set title = :title, body = :body
                 where id = :id';
 
         $query = $conn->prepare($sql);
         if (! $query->execute(
             array(
                 ":title" => $passage->title,
-                ":passage" => $passage->passage,
+                ":body" => $passage->body,
                 ":id" => $passage->id))
         )
         {

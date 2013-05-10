@@ -17,4 +17,18 @@ class Link
 
         return $query->fetchAll();
     }
+
+    public static function create($link)
+    {
+        //throw new \Exception('A problem with validation?');
+        $query = null;
+        $conn = Db::connection();
+        $sql = 'INSERT INTO link (passage_id, choice) VALUES (?, ?)';
+
+        $query = $conn->prepare($sql);
+        $query->execute(array($link->passageId, $link->choice));
+
+        return $conn->lastInsertId();
+    }
+
 }

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS passage (
   id INT NOT NULL AUTO_INCREMENT,
   story_id INT NOT NULL,
   title VARCHAR(200) NOT NULL,
-  passage TEXT,
+  body TEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (story_id) REFERENCES story(id) ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;

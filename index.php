@@ -53,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // load app code
 require $appDir . 'routes/stories.php';
 require $appDir . 'routes/passages.php';
+require $appDir . 'routes/links.php';
 // go
 //$response = $app->response();
 //$response->header('Access-Control-Allow-Origin','http://plotlines');

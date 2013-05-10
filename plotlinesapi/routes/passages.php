@@ -16,7 +16,8 @@ $app->get('/passagepage/:id', function ($id) use ($app) {
         }
 
         $story = models\Story::story($passage['story_id']);//null;//models\Story::story($passage->story_id);
-        $links = null;//models\Link::links($passage->id);
+
+        $links = models\Link::links($passage['id']);
 
         $data = json_encode(array(
             'story' => $story,
@@ -41,7 +42,7 @@ $app->post('/passages', function () use ($app) {
     $passage = (object) array (
         'storyId' => null,
         'title' => null,
-        'passage' => null
+        'body' => null
     );
 
     try {
@@ -90,7 +91,7 @@ $app->put('/passages', function () use ($app) {
     $passage = (object) array (
         'id' => null,
         'title' => null,
-        'passage' => null
+        'body' => null
     );
 
     try {
