@@ -16,12 +16,14 @@ $app->get('/passagepage/:id', function ($id) use ($app) {
         }
 
         $story = models\Story::story($passage['story_id']);//null;//models\Story::story($passage->story_id);
-
+        // TODO only need passage titles and ids here
+        $passages = models\Passage::passages($passage['story_id']);
         $links = models\Link::links($passage['id']);
 
         $data = json_encode(array(
             'story' => $story,
             'passage' => $passage,
+            'passages' => $passages,
             'links' => $links
         ));
     }

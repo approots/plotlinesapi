@@ -6,7 +6,8 @@ $app->post('/links', function () use ($app) {
     $response->header('Content-type','application/json');
     $link = (object) array (
         'passageId' => null,
-        'choice' => null
+        'choice' => null,
+        'destinationId' => null
     );
 
     try {

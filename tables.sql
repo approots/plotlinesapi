@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS story (
   slug VARCHAR(200) NOT NULL,
   title VARCHAR(200) NOT NULL,
   description TEXT,
+  start_passage_id INT,
   PRIMARY KEY (id),
   FOREIGN KEY (account_id) REFERENCES account(id) ON DELETE CASCADE
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;

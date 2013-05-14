@@ -36,14 +36,38 @@ class Passage
     public static function create($passage)
     {
         //throw new \Exception('A problem with validation?');
+        $id = null;
+        $startPassageId = null;
         $query = null;
         $conn = Db::connection();
-        $sql = 'INSERT INTO passage (story_id, title, body) VALUES (?, ?, ?)';
 
+        $sql = 'INSERT INTO passage (story_id, title, body) VALUES (?, ?, ?)';
         $query = $conn->prepare($sql);
         $query->execute(array($passage->storyId, $passage->title, $passage->body));
+        $id = $conn->lastInsertId();
 
-        return $conn->lastInsertId();
+        // All stories require a starting point
+        // TODO join on passages to be sure the passage id in start_passage still exists.
+        $sql = 'SELECT start_passage_id from story';
+        $query = $conn->query($sql);
+        $startPassageId = $query->fetchColumn();
+        if (! $startPassageId)
+        {
+            $sql = 'UPDATE STORY SET start_passage_id = :start_passage_id where id = :id';
+            $query = $conn->prepare($sql);
+            if (! $query->execute(
+                array(
+                    ":start_passage_id" => $id,
+                    ":id" => $passage->storyId)
+                )
+            )
+            {
+                $error = $query->errorInfo();
+                throw new Exception($query->errorInfo($error[2]));
+            }
+        }
+
+        return $id;
     }
 
     public static function delete($id)

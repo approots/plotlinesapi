@@ -23,10 +23,10 @@ class Link
         //throw new \Exception('A problem with validation?');
         $query = null;
         $conn = Db::connection();
-        $sql = 'INSERT INTO link (passage_id, choice) VALUES (?, ?)';
+        $sql = 'INSERT INTO link (passage_id, choice, destination_id) VALUES (?, ?, ?)';
 
         $query = $conn->prepare($sql);
-        $query->execute(array($link->passageId, $link->choice));
+        $query->execute(array($link->passageId, $link->choice, $link->destinationId));
 
         return $conn->lastInsertId();
     }
